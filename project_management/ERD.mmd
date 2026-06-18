@@ -1,0 +1,55 @@
+%% Mermaid ERD for KDKMP
+%% Save as ERD.mmd and render with a Mermaid viewer
+
+erDiagram
+    USERS {
+        INTEGER id PK
+        VARCHAR name
+        VARCHAR email
+        VARCHAR password
+        VARCHAR role
+        DATETIME email_verified_at
+    }
+
+    TRANSACTIONS {
+        INTEGER id PK
+        INTEGER user_id FK
+        VARCHAR description
+        VARCHAR category
+        INTEGER termin_id FK
+        INTEGER amount
+        DATE transaction_date
+    }
+
+    TERMINS {
+        INTEGER id PK
+        VARCHAR name
+        TEXT description
+    }
+
+    COMMODITIES {
+        INTEGER id PK
+        INTEGER user_id FK
+        VARCHAR name
+        VARCHAR village
+        VARCHAR unit
+        INTEGER stock
+        INTEGER estimated_value
+    }
+
+    BARTER_REQUESTS {
+        INTEGER id PK
+        INTEGER user_id FK
+        INTEGER target_user_id FK
+        INTEGER commodity_id FK
+        INTEGER quantity
+        VARCHAR status
+        TEXT notes
+    }
+
+    USERS ||--o{ TRANSACTIONS : "has"
+    USERS ||--o{ COMMODITIES : "owns"
+    USERS ||--o{ BARTER_REQUESTS : "requests"
+    USERS ||--o{ BARTER_REQUESTS : "receives"
+    TRANSACTIONS }o--|| TERMINS : "uses"
+    COMMODITIES ||--o{ BARTER_REQUESTS : "is_requested_in"

@@ -1,0 +1,15 @@
+%% Mermaid Gantt for sprint planning
+gantt
+    title KDKMP - 2 week sprint
+    dateFormat  YYYY-MM-DD
+    section Setup
+    Environment & DB       :done,    des1, 2026-05-14, 2d
+    Migrate SQLite->MySQL  :active,  des2, 2026-05-16, 1d
+    section Backend
+    Stabilize controllers  :crit, b1, 2026-05-17, 3d
+    Policies & Tests       :b2, 2026-05-20, 2d
+    section Frontend
+    Navigation & UX        :f1, 2026-05-22, 2d
+    section QA & Docs
+    QA & Regression        :q1, 2026-05-24, 2d
+    Docs & Handover        :d1, 2026-05-26, 1d
