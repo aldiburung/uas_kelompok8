@@ -1,66 +1,39 @@
 # Project Plan — Sistem Informasi (KDKMP)
 
 ## Goal
-Sediakan modul Keuangan, Barter, Permintaan Barter, Termin, dan Reporting dengan 5-level role-based access control. Sertakan dokumentasi, QA, dan deployment ke MySQL (phpMyAdmin).
+Sediakan modul Keuangan, Barter, Permintaan Barter, Termin, dan Reporting dengan sistem hak akses berbasis peran (Role-Based Access Control) yang terbagi menjadi 2 role utama: Keuangan dan Barter. Sertakan dokumentasi, QA, dan deployment ke MySQL (phpMyAdmin).
 
-## Team Roles & Responsibilities
-- Project Manager (You): Prioritize features, accept deliveries, stakeholder communication.
-- System Analyst: Requirement breakdown, ERD, API specs.
-- Backend Developer(s): Controllers, Models, DB migrations, policies, authentication, testing.
-- Frontend Developer(s): Blade/Tailwind views, navigation, responsive UI.
-- QA / Tester: Test plans, write test cases (Pest/phpunit), run regression testing.
-- DevOps: PHP version, server setup, database migration, deployment.
-- Documentation: README, API docs, user guide.
+## Team Roles & Responsibilities (Actual Team: 2 Members)
+- **Aldi Burung (Project Manager / Fullstack Developer)**: Inisialisasi git, setup database MySQL, desain interface (dashboard, form, sidebar), dan optimasi tampilan responsive.
+- **Julia (System Analyst / Fullstack Developer)**: Analisis kebutuhan (SRS), logika backend keuangan/barter, middleware keamanan (CheckRole), unit/feature testing, dan dokumentasi lengkap.
 
 ## Deliverables
-- Role-based access (5 roles) — done (code-level)
-- DB migration & MySQL data (migration scripts) — todo: migrate from SQLite to MySQL
-- UI updates (sidebar, pages) — partial done
+- Role-based access (2 roles: keuangan & barter) — done (code-level)
+- DB migration & MySQL data (migration scripts) — done
+- UI updates (sidebar, dashboard, forms) — done
 - Policies & controllers hardened — done
-- Tests (unit + feature) — todo
-- ERD, Gantt, task assignments — created
+- Tests (unit + feature) — done
+- ERD, Gantt Chart Excel, Laporan Akhir — done
 
-## High-level Tasks (short roadmap)
-1. Environment & DB (2 days)
-   - Configure PHP 8.3 on dev machine or Laragon
-   - Create MySQL database `kdkmp` and update `.env`
-   - Run migrations and seeders
-2. Backend Stabilization (3 days)
-   - Review and finish controllers, policies, edge cases
-   - Add authorization trait and centralize checks
-   - Add feature tests
-3. Frontend Polishing (2 days)
-   - Fix navigation visibility and responsive UI
-   - Improve forms and validation messages
-4. QA & Regression (2 days)
-   - Write test plan, run automated tests
-   - Manual exploratory testing across roles
-5. Documentation & Handover (1 day)
-   - README, deployment steps, user manual
-
-## Suggested Task Breakdown (example for sprint)
-- Backend: 40% (controllers, policies, tests)
-- Frontend: 30% (views, UX)
-- QA: 15% (tests, bug fixes)
-- Docs/PM: 15%
+## High-level Tasks (3-Week Roadmap)
+1. **Fase 1: Persiapan & Setup (Minggu 1)**
+   - Penyusunan Dokumen SRS & Perancangan ERD.
+   - Inisiasi Project & Git repository.
+   - Setup Laragon & MySQL database.
+2. **Fase 2: Pembangunan Backend & Database (Minggu 2)**
+   - Database Migration & Seeding data awal.
+   - Pembuatan logic backend Keuangan & Termin.
+   - Pembuatan logic backend Barter & Stok Komoditas.
+   - Implementasi CheckRole Middleware & Security Policies.
+3. **Fase 3: Frontend, Testing, & Deployment (Minggu 3)**
+   - Desain Layout Dashboard & Sidebar dinamis responsif.
+   - Desain Form Input & Validasi UI.
+   - Pembuatan Automated Testing Suite.
+   - Finalisasi Dokumentasi & Handover.
 
 ## Acceptance Criteria
-- Each role can only access allowed routes (as defined)
-- Admin can access and manage all data
-- No 403 for permitted users; errors must return friendly messages
-- Database runs on MySQL and data migrated
-- Tests cover core flows (login, create transaction, create barter, accept barter)
-
-## Next Immediate Actions For You
-1. Confirm MySQL credentials (host, port, user, password).
-2. If using Laragon, enable PHP 8.3 CLI or set PATH to PHP 8.3.
-3. Run migration and seeder:
-
-```bash
-# create DB in mysql (via phpMyAdmin or CLI)
-# then in project root
-php artisan migrate --force
-php artisan db:seed --class=Database\\Seeders\\DatabaseSeeder
-```
-
-If your `php` CLI gives Composer platform errors, run migrations via Laragon's PHP 8.3 or ask me to provide a direct migration script to import into MySQL.
+- Setiap user hanya bisa mengakses route yang diperbolehkan sesuai perannya (role: keuangan / barter).
+- User dengan role 'keuangan' tidak bisa mengakses fitur 'barter', begitu juga sebaliknya (menghasilkan status HTTP 403).
+- Pengurangan stok komoditas dan pencatatan transaksi barter berjalan secara atomik menggunakan database transaction.
+- Aplikasi berjalan lancar menggunakan database MySQL.
+- Automated tests meloloskan skenario otorisasi dan fungsionalitas dasar.
