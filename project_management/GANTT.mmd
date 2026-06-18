@@ -1,15 +1,20 @@
-%% Mermaid Gantt for sprint planning
+%% Mermaid Gantt for 3-week sprint planning
 gantt
-    title KDKMP - 2 week sprint
+    title KDKMP - 3 Week Timeline (Aldi & Julia)
     dateFormat  YYYY-MM-DD
-    section Setup
-    Environment & DB       :done,    des1, 2026-05-14, 2d
-    Migrate SQLite->MySQL  :active,  des2, 2026-05-16, 1d
+    axisFormat  %d-%m
+    section Persiapan & Setup
+    Analisis & SRS (Julia)         :done, t1, 2026-05-14, 3d
+    DB Design & ERD (Julia)        :done, t2, 2026-05-16, 2d
+    Init Project & Git (Aldi)      :done, t3, 2026-05-17, 2d
+    Config Laragon & MySQL (Aldi)  :done, t4, 2026-05-18, 2d
     section Backend
-    Stabilize controllers  :crit, b1, 2026-05-17, 3d
-    Policies & Tests       :b2, 2026-05-20, 2d
-    section Frontend
-    Navigation & UX        :f1, 2026-05-22, 2d
-    section QA & Docs
-    QA & Regression        :q1, 2026-05-24, 2d
-    Docs & Handover        :d1, 2026-05-26, 1d
+    DB Migration & Seeding (Aldi)  :done, t5, 2026-05-20, 3d
+    Keuangan Backend (Julia)       :done, t6, 2026-05-22, 4d
+    Barter Backend (Julia)         :done, t7, 2026-05-23, 4d
+    Middleware & Security (Julia)  :done, t8, 2026-05-25, 3d
+    section Frontend & QA
+    Dashboard & Sidebar (Aldi)     :done, t9, 2026-05-28, 4d
+    Form UI & Validation (Aldi)    :done, t10, 2026-05-30, 4d
+    Automated Testing (Julia)      :done, t11, 2026-05-31, 3d
+    Handover & Deploy (Aldi & Julia) :done, t12, 2026-06-01, 3d

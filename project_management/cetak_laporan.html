@@ -10,7 +10,7 @@
             font-family: 'Inter', sans-serif;
             line-height: 1.6;
             color: #333;
-            max-width: 900px;
+            max-width: 950px;
             margin: 0 auto;
             padding: 40px 20px;
             background-color: #f9f9f9;
@@ -134,58 +134,63 @@
             border: 1px solid #edf2f7;
             border-radius: 8px;
             padding: 20px;
+            overflow-x: auto;
         }
 
-        .gantt-header {
-            display: flex;
-            border-bottom: 2px solid #edf2f7;
-            padding-bottom: 10px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            color: #718096;
+        .gantt-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
         }
 
-        .gantt-row {
-            display: flex;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid #f7fafc;
+        .gantt-table th, .gantt-table td {
+            border: 1px solid #e2e8f0;
+            padding: 6px 4px;
+            text-align: center;
         }
 
-        .gantt-task-name {
-            width: 30%;
+        .gantt-table th.task-col, .gantt-table td.task-col {
+            text-align: left;
+            width: 180px;
             font-weight: 600;
-            color: #2d3748;
-            font-size: 0.9rem;
         }
 
-        .gantt-bar-container {
-            width: 70%;
-            background-color: #edf2f7;
-            border-radius: 4px;
-            height: 24px;
-            position: relative;
+        .gantt-table th.owner-col, .gantt-table td.owner-col {
+            width: 80px;
         }
 
-        .gantt-bar {
-            background: linear-gradient(90deg, #3182ce 0%, #4299e1 100%);
-            height: 100%;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            padding-right: 10px;
+        .day-cell.active-aldi {
+            background-color: #3182ce !important;
             color: white;
-            font-size: 0.75rem;
-            font-weight: 600;
         }
 
-        .gantt-bar.green {
-            background: linear-gradient(90deg, #38a169 0%, #48bb78 100%);
+        .day-cell.active-julia {
+            background-color: #38a169 !important;
+            color: white;
         }
 
-        .gantt-bar.purple {
-            background: linear-gradient(90deg, #805ad5 0%, #9f7aea 100%);
+        .day-cell.active-both {
+            background-color: #805ad5 !important;
+            color: white;
+        }
+
+        .legend-container {
+            display: flex;
+            gap: 20px;
+            margin-top: 15px;
+            font-size: 0.85rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
         }
 
         /* Print styling to split pages nicely */
@@ -205,14 +210,16 @@
             .no-print {
                 display: none;
             }
-            .gantt-bar {
+            .day-cell.active-aldi, .day-cell.active-julia, .day-cell.active-both {
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
             }
         }
 
         .print-btn-container {
-            text-align: right;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 20px;
         }
 
@@ -232,12 +239,23 @@
         .btn-print:hover {
             background-color: #2b6cb0;
         }
+
+        .excel-link {
+            font-size: 0.95rem;
+            color: #2b6cb0;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .excel-link:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
 
     <div class="print-btn-container no-print">
-        <button class="btn-print" onclick="window.print()">Cetak / Simpan ke PDF</button>
+        <a href="Gantt_Chart_3_Minggu.xlsx" class="excel-link" download>📥 Download Gantt_Chart_3_Minggu.xlsx (Format Excel)</a>
+        <button class="btn-print" onclick="window.print()">🖨️ Cetak / Simpan ke PDF</button>
     </div>
 
     <div class="container">
@@ -279,7 +297,7 @@
             <div class="alert-box">
                 <div class="alert-title">Pernyataan Khusus Mengenai Anggota Kelompok:</div>
                 <p style="margin: 0; font-size: 0.95rem; line-height: 1.5; color: #2b6cb0;">
-                    Pada pembentukan awal di kelas, kelompok ini terdiri dari 5 orang. Namun, seiring berjalannya proyek, 3 anggota lainnya tidak dapat berpartisipasi aktif karena kendala internal masing-masing. Oleh karena itu, demi kelancaran tugas UAS ini, seluruh sisa pengerjaan analisis kebutuhan, desain database, penulisan script backend, penyusunan antarmuka web, pengujian otomatis, hingga penyusunan laporan ini dialihkan dan diselesaikan sepenuhnya oleh <strong>Aldi Burung</strong> dan <strong>Julia</strong> secara bersama-sama.
+                    Pada pembentukan awal di kelas, kelompok ini terdiri dari 5 orang. Namun, seiring berjalannya proyek, 3 anggota lainnya tidak dapat berpartisipasi aktif karena kendala internal masing-masing. Oleh karena itu, demi kelancaran tugas UAS ini, seluruh sisa pengerjaan analisis kebutuhan, desain database, penulisan script backend, penyusunan antarmuka web, pengujian otomatis, hingga penyusunan laporan ini dialihkan dan diselesaikan sepenuhnya oleh <strong>Aldi Burung</strong> dan <strong>Julia</strong> secara bersama-sama dalam kurun waktu <strong>3 minggu (21 hari)</strong>.
                 </p>
             </div>
         </div>
@@ -363,54 +381,94 @@
         <!-- GANTT CHART & LAPORAN PROGRES -->
         <h1>2. Jadwal Pengerjaan (Gantt Chart) & Laporan Progres</h1>
         
-        <h2>2.1 Gantt Chart</h2>
-        <p>Gantt chart di bawah ini menunjukkan estimasi jadwal proyek selama 2 minggu sprint pengembangan sistem:</p>
+        <h2>2.1 Gantt Chart (3 Minggu / 21 Hari)</h2>
+        <p>Tabel visual Gantt Chart pengerjaan tim 2 orang (Aldi & Julia) selama 3 minggu:</p>
         
         <div class="gantt-container">
-            <div class="gantt-header">
-                <div style="width: 30%">Tugas / Aktivitas</div>
-                <div style="width: 70%">Timeline Progres Proyek</div>
-            </div>
+            <table class="gantt-table">
+                <thead>
+                    <tr>
+                        <th class="task-col">Nama Tugas</th>
+                        <th class="owner-col">PIC</th>
+                        <th>H1</th><th>H2</th><th>H3</th><th>H4</th><th>H5</th><th>H6</th><th>H7</th><th>H8</th><th>H9</th><th>H10</th><th>H11</th><th>H12</th><th>H13</th><th>H14</th><th>H15</th><th>H16</th><th>H17</th><th>H18</th><th>H19</th><th>H20</th><th>H21</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="task-col">Analisis & SRS</td>
+                        <td class="owner-col">Julia</td>
+                        <td class="day-cell active-julia"></td><td class="day-cell active-julia"></td><td class="day-cell active-julia"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td class="task-col">DB Design & ERD</td>
+                        <td class="owner-col">Julia</td>
+                        <td></td><td></td><td class="day-cell active-julia"></td><td class="day-cell active-julia"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td class="task-col">Init Project & Git</td>
+                        <td class="owner-col">Aldi</td>
+                        <td></td><td></td><td></td><td class="day-cell active-aldi"></td><td class="day-cell active-aldi"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td class="task-col">Config Laragon & MySQL</td>
+                        <td class="owner-col">Aldi</td>
+                        <td></td><td></td><td></td><td></td><td class="day-cell active-aldi"></td><td class="day-cell active-aldi"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td class="task-col">DB Migration & Seeding</td>
+                        <td class="owner-col">Aldi</td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td class="day-cell active-aldi"></td><td class="day-cell active-aldi"></td><td class="day-cell active-aldi"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td class="task-col">Keuangan Backend</td>
+                        <td class="owner-col">Julia</td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="day-cell active-julia"></td><td class="day-cell active-julia"></td><td class="day-cell active-julia"></td><td class="day-cell active-julia"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td class="task-col">Barter Backend</td>
+                        <td class="owner-col">Julia</td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="day-cell active-julia"></td><td class="day-cell active-julia"></td><td class="day-cell active-julia"></td><td class="day-cell active-julia"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td class="task-col">Middleware & Security</td>
+                        <td class="owner-col">Julia</td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="day-cell active-julia"></td><td class="day-cell active-julia"></td><td class="day-cell active-julia"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td class="task-col">Dashboard & Sidebar</td>
+                        <td class="owner-col">Aldi</td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="day-cell active-aldi"></td><td class="day-cell active-aldi"></td><td class="day-cell active-aldi"></td><td class="day-cell active-aldi"></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td class="task-col">Form UI & Validation</td>
+                        <td class="owner-col">Aldi</td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="day-cell active-aldi"></td><td class="day-cell active-aldi"></td><td class="day-cell active-aldi"></td><td class="day-cell active-aldi"></td><td></td>
+                    </tr>
+                    <tr>
+                        <td class="task-col">Automated Testing</td>
+                        <td class="owner-col">Julia</td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="day-cell active-julia"></td><td class="day-cell active-julia"></td><td class="day-cell active-julia"></td><td></td>
+                    </tr>
+                    <tr>
+                        <td class="task-col">Handover & Deploy</td>
+                        <td class="owner-col">Bersama</td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="day-cell active-both"></td><td class="day-cell active-both"></td><td class="day-cell active-both"></td>
+                    </tr>
+                </tbody>
+            </table>
             
-            <div class="gantt-row">
-                <div class="gantt-task-name">Inisiasi & Analisis Kebutuhan</div>
-                <div class="gantt-bar-container">
-                    <div class="gantt-bar green" style="width: 25%; margin-left: 0%;">Hari 1 - 2 (100%)</div>
+            <div class="legend-container">
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #3182ce;"></div>
+                    <span>Aldi Burung (Frontend / Setup)</span>
                 </div>
-            </div>
-
-            <div class="gantt-row">
-                <div class="gantt-task-name">Desain ERD & DB Schema</div>
-                <div class="gantt-bar-container">
-                    <div class="gantt-bar green" style="width: 15%; margin-left: 20%;">Hari 3 (100%)</div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #38a169;"></div>
+                    <span>Julia (Analyst / Backend / QA)</span>
                 </div>
-            </div>
-
-            <div class="gantt-row">
-                <div class="gantt-task-name">Setup Laravel & Auth</div>
-                <div class="gantt-bar-container">
-                    <div class="gantt-bar purple" style="width: 30%; margin-left: 30%;">Hari 4 - 6 (100%)</div>
-                </div>
-            </div>
-
-            <div class="gantt-row">
-                <div class="gantt-task-name">Logika Backend Keuangan & Barter</div>
-                <div class="gantt-bar-container">
-                    <div class="gantt-bar purple" style="width: 40%; margin-left: 45%;">Hari 7 - 10 (100%)</div>
-                </div>
-            </div>
-
-            <div class="gantt-row">
-                <div class="gantt-task-name">Desain UI & Integrasi Blade</div>
-                <div class="gantt-bar-container">
-                    <div class="gantt-bar" style="width: 30%; margin-left: 70%;">Hari 11 - 12 (100%)</div>
-                </div>
-            </div>
-
-            <div class="gantt-row">
-                <div class="gantt-task-name">Automated Testing & Dokumentasi</div>
-                <div class="gantt-bar-container">
-                    <div class="gantt-bar" style="width: 15%; margin-left: 85%;">Hari 13 - 14 (100%)</div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #805ad5;"></div>
+                    <span>Kolaborasi Bersama</span>
                 </div>
             </div>
         </div>
@@ -418,7 +476,7 @@
         <h2>2.2 Laporan Progres Proyek (Awal s.d. Akhir)</h2>
         
         <h3>Tahap Awal (Inisiasi & Perancangan):</h3>
-        <p>Proyek dimulai dengan memetakan kebutuhan sistem komoditas desa. Kami merancang skema relasi antarentitas. Julia memimpin analisis SRS sementara Aldi menyiapkan repositori git awal.</p>
+        <p>Proyek dimulai dengan memetakan kebutuhan sistem komoditas desa. Kami merancang skema relasi antarentitas. Julia memimpin analisis SRS sementara Aldi menyiapkan repositori git awal dan mengonfigurasikan lingkungan database local MySQL.</p>
         
         <h3>Tahap Tengah (Implementasi Kode & Database):</h3>
         <p>Kami beralih menggunakan database MySQL. Database seeder dibuat untuk memudahkan pengisian data dummy. Aldi merancang struktur visual template Blade. Julia mengimplementasikan controller backend dengan validasi kepemilikan (ownership) dan kebijakan keamanan (policy).</p>
