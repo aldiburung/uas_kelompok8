@@ -35,4 +35,13 @@ class RoleAccessTest extends TestCase
         $this->actingAs($user)->get(route('barter-requests.index'))->assertStatus(200);
         $this->actingAs($user)->get(route('keuangan.index'))->assertStatus(403);
     }
+
+    public function test_dashboard_does_not_render_direct_logout_link()
+    {
+        $user = User::factory()->create(['role' => 'keuangan']);
+
+        $this->actingAs($user)
+            ->get(route('dashboard'))
+            ->assertDontSee('href="/logout"');
+    }
 }

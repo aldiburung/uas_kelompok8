@@ -41,7 +41,10 @@ class BarterRequestController extends Controller
         ]);
 
         $commodity = Commodity::findOrFail($validated['commodity_id']);
-
+// Tambahkan pengecekan ini di BarterRequestController.php @store
+if ($commodity->stock < $request->quantity) {
+    return redirect()->back()->with('error', 'Maaf bro, stok tidak mencukupi untuk transaksi ini!');
+}
         DB::transaction(function () use ($commodity, $validated) {
             $commodity->decrement('stock', $validated['quantity']);
 

@@ -9,18 +9,14 @@
                 <div class="p-6 text-gray-900">
                     <h1 class="text-3xl font-bold mb-6">Catat Transaksi Barter</h1>
                     <div class="mb-4 rounded-lg border border-blue-200 bg-blue-50 p-4 text-blue-700">
-                        <p class="text-sm">Pilih komoditas Anda yang ingin dicatat dalam transaksi barter ini.</p>
+                        <p class="text-sm">Pilih komoditas Anda yang ingin dicatat sebagai transaksi barter internal.</p>
                     </div>
 
-                    @if ($errors->any())
-                        <div class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
+                   @if(session('error'))
+    <div class="bg-red-500 text-white p-4 rounded-xl mb-4">
+        {{ session('error') }}
+    </div>
+@endif
 
                     <form action="{{ route('barter-requests.store') }}" method="POST" class="space-y-4">
                         @csrf
@@ -29,7 +25,7 @@
                             <label class="block text-gray-700 font-bold mb-2">Pilih Komoditas</label>
                             @if($commodities->isEmpty())
                                 <div class="rounded-lg border border-yellow-300 bg-yellow-50 p-4 text-yellow-700">
-                                    Tidak ada komoditas tersedia dari pengguna lain saat ini. Silakan tambahkan komoditas lain terlebih dahulu.
+                                    Belum ada komoditas yang tersedia untuk dicatat. Silakan tambahkan komoditas terlebih dahulu.
                                 </div>
                             @else
                                 <select name="commodity_id" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500" required>

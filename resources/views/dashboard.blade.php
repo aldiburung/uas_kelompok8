@@ -3,7 +3,7 @@
         <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
                 <p class="text-sm uppercase tracking-[0.3em] text-red-600">Dashboard KDKMP</p>
-                <h1 class="text-3xl font-bold text-gray-900">Halo, {{ Auth::user()->name }}</h1>
+                <h1 class="text-3xl font-bold text-gray-900">Halo, Operator {{ ucfirst(Auth::user()->role) }}
                 <p class="mt-2 text-sm text-gray-500">Lihat ringkasan aktivitas Anda dan akses cepat ke menu penting.</p>
             </div>
             <div class="flex gap-3">
@@ -15,7 +15,7 @@
         <div class="rounded-[28px] bg-white p-6 shadow-[0_18px_60px_-30px_rgba(239,68,68,0.5)] border border-red-100">
             <p class="text-sm uppercase tracking-[0.28em] text-red-600">Transaksi Keuangan</p>
             <p class="mt-4 text-4xl font-bold text-gray-900">{{ $transactionCount }}</p>
-            <p class="mt-2 text-sm text-gray-500">Total transaksi tercatat untuk Anda.</p>
+            <p class="mt-2 text-sm text-gray-500">Total transaksi tercatat di sistem.</p>
         </div>
 
         <div class="rounded-[28px] bg-white p-6 shadow-[0_18px_60px_-30px_rgba(239,68,68,0.5)] border border-red-100">

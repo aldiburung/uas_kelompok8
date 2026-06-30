@@ -73,3 +73,4 @@ Sistem memiliki 2 level aktor utama:
 
 ### 4.3 Ketersediaan (Availability)
 * **NFR-05 (Kompatibilitas Browser):** Sistem harus berjalan dengan lancar pada browser Google Chrome, Mozilla Firefox, Microsoft Edge, dan Safari.
+

@@ -21,12 +21,12 @@
                     <input type="checkbox" name="remember" class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-500" />
                     Remember me
                 </label>
-                @if (Route::has('password.request'))
+                {{--@if (Route::has('password.request'))
                     <a href="{{ route('password.request') }}" class="font-semibold text-red-600 hover:text-red-700">Forgot password?</a>
-                @endif
+                @endif--}}
             </div>
             <button type="submit" class="w-full rounded-3xl bg-red-600 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-red-500/20 hover:bg-red-700">Log in</button>
         </form>
-        <p class="text-center text-sm text-gray-500">Belum punya akun? <a href="{{ route('register') }}" class="font-semibold text-red-600 hover:text-red-700">Register sekarang</a></p>
-    </div>
+       {{-- <p class="text-center text-sm text-gray-500">Belum punya akun? <a href="{{ route('register') }}" class="font-semibold text-red-600 hover:text-red-700">Register sekarang</a></p>
+    </div>--}}
 </x-guest-layout>

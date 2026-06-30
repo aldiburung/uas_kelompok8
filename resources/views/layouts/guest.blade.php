@@ -16,7 +16,7 @@
                 <div class="bg-white/10 p-6 sm:px-8 sm:py-8 text-center">
                     <div class="mx-auto max-w-xl">
                         <p class="text-xs tracking-[0.28em] uppercase text-red-100">Welcome to Website KDKMP</p>
-                        <h1 class="mt-4 text-3xl sm:text-4xl font-bold text-white">Login or register to manage your village barter system.</h1>
+                        <h1 class="mt-4 text-3xl sm:text-4xl font-bold text-white">Silakan login untuk mengelola sistem komoditas desa dan keuangan.</h1>
                     </div>
                 </div>
                 <div class="bg-white/90 p-6 sm:p-8 text-gray-900">
