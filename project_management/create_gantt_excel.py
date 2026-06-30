@@ -18,6 +18,7 @@ zebra_fill_color = "F7FAFC" # Off-white
 accent_color = "E2E8F0"
 aldi_color = "EBF8FF" # Light blue fill
 julia_color = "F0FFF4" # Light green fill
+sopyan_color = "FFF5F5" # Light red fill
 both_color = "FAF5FF" # Light purple fill
 
 # Fonts
@@ -37,6 +38,7 @@ fill_timeline_header = PatternFill(start_color=header_fill_color, end_color=head
 # Fills for bar chart cells in timeline
 fill_bar_aldi = PatternFill(start_color="3182CE", end_color="3182CE", fill_type="solid") # Strong Blue
 fill_bar_julia = PatternFill(start_color="38A169", end_color="38A169", fill_type="solid") # Strong Green
+fill_bar_sopyan = PatternFill(start_color="E53E3E", end_color="E53E3E", fill_type="solid") # Red
 fill_bar_both = PatternFill(start_color="805AD5", end_color="805AD5", fill_type="solid") # Purple
 
 # Borders
@@ -56,7 +58,7 @@ ws["A1"].font = font_title
 ws["A1"].alignment = align_left
 
 ws.merge_cells("A2:AC2")
-ws["A2"] = "Sistem Informasi Komoditas Desa & Keuangan Modern - Estimasi Jadwal Kerja 3 Minggu (Aldi & Julia)"
+ws["A2"] = "Sistem Informasi Komoditas Desa & Keuangan Modern - Estimasi Jadwal Kerja 3 Minggu (Aldi, Julia, & Sopyan)"
 ws["A2"].font = font_subtitle
 ws["A2"].alignment = align_left
 
@@ -107,7 +109,7 @@ for col_idx in range(1, 9):
 # Data Rows
 tasks = [
     # W1
-    ("T1", "Analisis Kebutuhan & Dokumen SRS", "Persiapan", "Julia", 1, 3, 3, 1.0),
+    ("T1", "Analisis Kebutuhan & Dokumen SRS", "Persiapan", "Julia & Sopyan", 1, 3, 3, 1.0),
     ("T2", "Perancangan Database & ERD", "Persiapan", "Julia", 3, 4, 2, 1.0),
     ("T3", "Inisialisasi Project & Setup Git", "Setup", "Aldi", 4, 5, 2, 1.0),
     ("T4", "Config Laragon & DB MySQL", "Setup", "Aldi", 5, 6, 2, 1.0),
@@ -117,10 +119,10 @@ tasks = [
     ("T7", "Backend Barter & Stok Komoditas", "Backend", "Julia", 10, 13, 4, 1.0),
     ("T8", "CheckRole Middleware & Security", "Backend", "Julia", 12, 14, 3, 1.0),
     # W3
-    ("T9", "Layout Dashboard & Sidebar Dinamis", "Frontend", "Aldi", 15, 18, 4, 1.0),
+    ("T9", "Layout Dashboard & Sidebar Dinamis", "Frontend", "Sopyan", 15, 18, 4, 1.0),
     ("T10", "Desain Form Input & Validasi", "Frontend", "Aldi", 17, 20, 4, 1.0),
     ("T11", "Automated Testing Suite", "Testing", "Julia", 18, 20, 3, 1.0),
-    ("T12", "Finalisasi Dokumen & Deployment", "Handover", "Aldi & Julia", 19, 21, 3, 1.0),
+    ("T12", "Finalisasi Dokumen & Deployment", "Handover", "Semua Tim", 19, 21, 3, 1.0),
 ]
 
 current_row = 6
@@ -166,6 +168,8 @@ for task in tasks:
                 cell.fill = fill_bar_aldi
             elif owner == "Julia":
                 cell.fill = fill_bar_julia
+            elif owner == "Sopyan":
+                cell.fill = fill_bar_sopyan
             else:
                 cell.fill = fill_bar_both
         else:
@@ -189,7 +193,12 @@ ws.cell(row=current_row, column=3).fill = fill_bar_julia
 ws.cell(row=current_row, column=3).border = border_all
 
 current_row += 1
-ws.cell(row=current_row, column=2, value="Bersama (Handover & Deployment)").font = font_data
+ws.cell(row=current_row, column=2, value="Sopyan (Frontend / UI / UX)").font = font_data
+ws.cell(row=current_row, column=3).fill = fill_bar_sopyan
+ws.cell(row=current_row, column=3).border = border_all
+
+current_row += 1
+ws.cell(row=current_row, column=2, value="Bersama (Gabungan Tim)").font = font_data
 ws.cell(row=current_row, column=3).fill = fill_bar_both
 ws.cell(row=current_row, column=3).border = border_all
 

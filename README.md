@@ -11,6 +11,7 @@
 Proyek ini dikembangkan secara penuh oleh **Kelompok 8**:
 - **Aldi Burung** (Project Manager / Fullstack Developer)
 - **Julia** (System Analyst / Fullstack Developer)
+- **Sopyan** (Frontend Developer / UI/UX Designer)
 
 *Waktu Pengerjaan: 3 Minggu (21 Hari)*
 
