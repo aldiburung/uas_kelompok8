@@ -1,0 +1,36 @@
+%% Mermaid Use Case Diagram for KDKMP (Flowchart workaround)
+%% Save as USE_CASE.mmd and render with a Mermaid viewer
+
+flowchart LR
+    %% Actors
+    K((Petugas Keuangan))
+    B((Warga / Barter))
+
+    %% System Boundary
+    subgraph KDKMP [Sistem Informasi KDKMP]
+        UC1([Login ke Sistem])
+        UC2([Kelola Transaksi Keuangan])
+        UC3([Kelola Termin Pembayaran])
+        UC4([Cetak Laporan Keuangan])
+        
+        UC5([Kelola Katalog Komoditas])
+        UC6([Buat Request Barter])
+        UC7([Terima/Tolak Barter])
+        UC8([Lihat Riwayat Barter])
+    end
+
+    %% Relationships
+    K --> UC1
+    K --> UC2
+    K --> UC3
+    K --> UC4
+
+    B --> UC1
+    B --> UC5
+    B --> UC6
+    B --> UC7
+    B --> UC8
+
+    %% Styling
+    classDef actor fill:#f9f9f9,stroke:#333,stroke-width:2px;
+    class K,B actor;

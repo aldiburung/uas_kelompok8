@@ -1,0 +1,34 @@
+%% Mermaid Sequence Diagram for Pencatatan Transaksi Keuangan KDKMP
+%% Save as SEQUENCE.mmd and render with a Mermaid viewer
+
+sequenceDiagram
+    autonumber
+    actor Petugas as Petugas Keuangan
+    participant Frontend as Halaman Web (View)
+    participant Backend as Controller (Laravel API)
+    participant DB as Database (MySQL)
+
+    Petugas->>Frontend: Klik menu "Catat Transaksi"
+    Frontend-->>Petugas: Tampilkan Form Transaksi
+    
+    Petugas->>Frontend: Input Nominal, Deskripsi & Pilih Termin
+    Petugas->>Frontend: Klik tombol "Simpan"
+    
+    Frontend->>Backend: POST /keuangan (Data Transaksi)
+    
+    activate Backend
+    Backend->>Backend: Validasi Data (Required, Numeric, dll)
+    
+    alt Data Tidak Valid
+        Backend-->>Frontend: Return Error Validation
+        Frontend-->>Petugas: Tampilkan Pesan Error di Form
+    else Data Valid
+        Backend->>DB: INSERT INTO transactions (amount, description, termin_id, user_id)
+        activate DB
+        DB-->>Backend: Insert Success (transaction_id)
+        deactivate DB
+        
+        Backend-->>Frontend: Redirect back() with success message
+        Frontend-->>Petugas: Tampilkan Notifikasi "Transaksi Berhasil Dicatat"
+    end
+    deactivate Backend

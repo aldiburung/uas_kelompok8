@@ -1,0 +1,43 @@
+%% Mermaid Activity Diagram for Proses Transaksi Barter KDKMP
+%% Save as ACTIVITY.mmd and render with a Mermaid viewer
+
+stateDiagram-v2
+    [*] --> Login
+    Login --> Dashboard
+    Dashboard --> BukaKatalog: Warga 1 (Pemohon) melihat katalog
+    
+    BukaKatalog --> PilihKomoditas
+    PilihKomoditas --> InputKuantitas
+    
+    InputKuantitas --> ValidasiStok: Sistem memvalidasi stok
+    
+    state ValidasiStok {
+        [*] --> CekStok
+        CekStok --> StokCukup: If Stock >= Qty
+        CekStok --> StokKurang: If Stock < Qty
+    }
+    
+    StokKurang --> InputKuantitas: Tampilkan Error
+    StokCukup --> KirimRequest
+    
+    KirimRequest --> TungguRespon: Sistem menyimpan status "Pending"
+    
+    TungguRespon --> TerimaNotif: Warga 2 (Penerima) mendapat notif
+    
+    TerimaNotif --> EvaluasiRequest
+    
+    state EvaluasiRequest {
+        [*] --> Keputusan
+        Keputusan --> Approve: Setuju
+        Keputusan --> Reject: Tolak
+    }
+    
+    Approve --> KurangiStok: Sistem mengurangi stok Warga 2
+    KurangiStok --> StatusSuccess: Update status "Approved"
+    
+    Reject --> StatusRejected: Update status "Rejected"
+    
+    StatusSuccess --> Selesai
+    StatusRejected --> Selesai
+    
+    Selesai --> [*]
