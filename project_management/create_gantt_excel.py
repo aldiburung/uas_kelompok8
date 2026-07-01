@@ -6,7 +6,7 @@ import datetime
 # Create a workbook and select the active sheet
 wb = openpyxl.Workbook()
 ws = wb.active
-ws.title = "Gantt Chart 3 Minggu"
+ws.title = "Gantt Chart 12 Minggu"
 
 # Ensure grid lines are visible
 ws.views.sheetView[0].showGridLines = True
@@ -25,7 +25,7 @@ both_color = "FAF5FF" # Light purple fill
 font_title = Font(name="Segoe UI", size=16, bold=True, color="1A202C")
 font_subtitle = Font(name="Segoe UI", size=10, italic=True, color="4A5568")
 font_header = Font(name="Segoe UI", size=10, bold=True, color="FFFFFF")
-font_timeline_header = Font(name="Segoe UI", size=8, bold=True, color="4A5568")
+font_timeline_header = Font(name="Segoe UI", size=9, bold=True, color="4A5568")
 font_data = Font(name="Segoe UI", size=10, color="2D3748")
 font_data_bold = Font(name="Segoe UI", size=10, bold=True, color="2D3748")
 
@@ -52,13 +52,13 @@ align_center = Alignment(horizontal="center", vertical="center")
 align_right = Alignment(horizontal="right", vertical="center")
 
 # Title Block
-ws.merge_cells("A1:AC1")
+ws.merge_cells("A1:T1")
 ws["A1"] = "GANTT CHART TIMELINE PROYEK KDKMP"
 ws["A1"].font = font_title
 ws["A1"].alignment = align_left
 
-ws.merge_cells("A2:AC2")
-ws["A2"] = "Sistem Informasi Komoditas Desa & Keuangan Modern - Estimasi Jadwal Kerja 3 Minggu (Aldi, Julia, & Sopyan)"
+ws.merge_cells("A2:T2")
+ws["A2"] = "Sistem Informasi Komoditas Desa & Keuangan Modern - Estimasi Jadwal Kerja 12 Minggu (Aldi, Julia, & Sopyan)"
 ws["A2"].font = font_subtitle
 ws["A2"].alignment = align_left
 
@@ -69,7 +69,7 @@ ws.row_dimensions[3].height = 10 # spacing
 # Table Headers
 headers = [
     "Task ID", "Nama Aktivitas", "Fase / Kategori", "Penanggung Jawab",
-    "Mulai", "Selesai", "Durasi (Hari)", "Progress"
+    "Durasi (Minggu)", "Progress"
 ]
 
 ws.row_dimensions[4].height = 28
@@ -82,47 +82,44 @@ for col_idx, header in enumerate(headers, start=1):
     cell.alignment = align_center
     cell.border = border_header
 
-# Timeline Headers (Hari 1 sampai 21)
-ws.merge_cells(start_row=4, start_column=9, end_row=4, end_column=29)
-ws.cell(row=4, column=9, value="TIMELINE PENGERJAAN (HARI 1 - HARI 21)").alignment = align_center
-ws.cell(row=4, column=9).font = font_header
-ws.cell(row=4, column=9).fill = fill_primary
-ws.cell(row=4, column=9).border = border_header
+# Timeline Headers (Minggu 1 sampai 12)
+ws.merge_cells(start_row=4, start_column=7, end_row=4, end_column=18)
+ws.cell(row=4, column=7, value="TIMELINE PENGERJAAN (MINGGU 1 - MINGGU 12)").alignment = align_center
+ws.cell(row=4, column=7).font = font_header
+ws.cell(row=4, column=7).fill = fill_primary
+ws.cell(row=4, column=7).border = border_header
 
-# Day Labels (Row 5)
+# Week Labels (Row 5)
 ws.row_dimensions[5].height = 20
-for day in range(1, 22):
-    col_idx = 8 + day
-    cell = ws.cell(row=5, column=col_idx, value=f"H{day}")
+for week in range(1, 13):
+    col_idx = 6 + week
+    cell = ws.cell(row=5, column=col_idx, value=f"M{week}")
     cell.font = font_timeline_header
     cell.fill = fill_timeline_header
     cell.alignment = align_center
     cell.border = border_all
 
 # Merge task info column headers vertically to align with row 5
-for col_idx in range(1, 9):
+for col_idx in range(1, 7):
     ws.merge_cells(start_row=4, start_column=col_idx, end_row=5, end_column=col_idx)
     # Re-apply border to the merged area borders
     for r in [4, 5]:
         ws.cell(row=r, column=col_idx).border = border_all
 
-# Data Rows
+# Data Rows: (Task ID, Name, Phase, Owner, Start Week, End Week, Duration, Progress)
 tasks = [
-    # W1
-    ("T1", "Analisis Kebutuhan & Dokumen SRS", "Persiapan", "Julia & Sopyan", 1, 3, 3, 1.0),
-    ("T2", "Perancangan Database & ERD", "Persiapan", "Julia", 3, 4, 2, 1.0),
-    ("T3", "Inisialisasi Project & Setup Git", "Setup", "Aldi", 4, 5, 2, 1.0),
-    ("T4", "Config Laragon & DB MySQL", "Setup", "Aldi", 5, 6, 2, 1.0),
-    # W2
-    ("T5", "Migrasi DB & Seeding Data Awal", "Backend", "Aldi", 7, 9, 3, 1.0),
-    ("T6", "Controller Keuangan & Termin", "Backend", "Julia", 9, 12, 4, 1.0),
-    ("T7", "Backend Barter & Stok Komoditas", "Backend", "Julia", 10, 13, 4, 1.0),
-    ("T8", "CheckRole Middleware & Security", "Backend", "Julia", 12, 14, 3, 1.0),
-    # W3
-    ("T9", "Layout Dashboard & Sidebar Dinamis", "Frontend", "Sopyan", 15, 18, 4, 1.0),
-    ("T10", "Desain Form Input & Validasi", "Frontend", "Aldi", 17, 20, 4, 1.0),
-    ("T11", "Automated Testing Suite", "Testing", "Julia", 18, 20, 3, 1.0),
-    ("T12", "Finalisasi Dokumen & Deployment", "Handover", "Semua Tim", 19, 21, 3, 1.0),
+    ("T1", "Analisis Kebutuhan & Dokumen SRS", "Persiapan", "Julia & Sopyan", 1, 2, 2, 1.0),
+    ("T2", "Perancangan Database & Pembuatan ERD", "Persiapan", "Julia", 2, 3, 2, 1.0),
+    ("T3", "Inisialisasi Project & Setup Git/Lingkungan", "Setup", "Aldi", 3, 4, 2, 1.0),
+    ("T4", "Migrasi DB & Seeding Data Awal", "Backend", "Aldi", 4, 5, 2, 1.0),
+    ("T5", "Pengembangan Modul Keuangan & Termin", "Backend", "Julia", 5, 7, 3, 1.0),
+    ("T6", "Pengembangan Modul Barter & Komoditas", "Backend", "Julia", 6, 8, 3, 1.0),
+    ("T7", "Desain Layout Dashboard & Sidebar UI", "Frontend", "Sopyan", 7, 9, 3, 1.0),
+    ("T8", "Integrasi Form Input & Validasi Frontend", "Frontend", "Aldi", 8, 10, 3, 1.0),
+    ("T9", "Implementasi Role Middleware & Security", "Backend", "Julia", 9, 10, 2, 1.0),
+    ("T10", "Pembuatan Automated Testing Suite (QA)", "Testing", "Sopyan", 10, 11, 2, 1.0),
+    ("T11", "Bug Fixing & UI Polish", "Handover", "Aldi & Sopyan", 11, 12, 2, 1.0),
+    ("T12", "Finalisasi Laporan & Persiapan Deployment", "Handover", "Semua Tim", 12, 12, 1, 1.0),
 ]
 
 current_row = 6
@@ -135,35 +132,28 @@ for task in tasks:
     ws.cell(row=current_row, column=2, value=tname).alignment = align_left
     ws.cell(row=current_row, column=3, value=phase).alignment = align_center
     ws.cell(row=current_row, column=4, value=owner).alignment = align_center
+    ws.cell(row=current_row, column=5, value=f"{duration} Minggu").alignment = align_center
     
-    # Dates represented as Day offset string for simplicity
-    start_date = datetime.date(2026, 5, 13) + datetime.timedelta(days=start)
-    end_date = datetime.date(2026, 5, 13) + datetime.timedelta(days=end)
-    
-    ws.cell(row=current_row, column=5, value=start_date.strftime("%d-%m-%Y")).alignment = align_center
-    ws.cell(row=current_row, column=6, value=end_date.strftime("%d-%m-%Y")).alignment = align_center
-    ws.cell(row=current_row, column=7, value=duration).alignment = align_center
-    
-    progress_cell = ws.cell(row=current_row, column=8, value=progress)
+    progress_cell = ws.cell(row=current_row, column=6, value=progress)
     progress_cell.number_format = '0%'
     progress_cell.alignment = align_center
     
     # Styling text cells
-    for col_idx in range(1, 9):
+    for col_idx in range(1, 7):
         cell = ws.cell(row=current_row, column=col_idx)
         cell.font = font_data
         cell.border = border_all
         if current_row % 2 == 1:
             cell.fill = fill_zebra
             
-    # Draw Gantt Bar
-    for day in range(1, 22):
-        col_idx = 8 + day
+    # Draw Gantt Bar (Week 1 to 12)
+    for week in range(1, 13):
+        col_idx = 6 + week
         cell = ws.cell(row=current_row, column=col_idx)
         cell.border = border_all
         
-        # If the day falls within the task range
-        if start <= day <= end:
+        # If the week falls within the task range
+        if start <= week <= end:
             if owner == "Aldi":
                 cell.fill = fill_bar_aldi
             elif owner == "Julia":
@@ -183,17 +173,17 @@ current_row += 1
 ws.cell(row=current_row, column=2, value="Legenda Penanggung Jawab:").font = font_data_bold
 
 current_row += 1
-ws.cell(row=current_row, column=2, value="Aldi Burung (Frontend / DB / Setup)").font = font_data
+ws.cell(row=current_row, column=2, value="Aldi Burung (PM / Backend / Setup)").font = font_data
 ws.cell(row=current_row, column=3).fill = fill_bar_aldi
 ws.cell(row=current_row, column=3).border = border_all
 
 current_row += 1
-ws.cell(row=current_row, column=2, value="Julia (Analyst / Backend / QA)").font = font_data
+ws.cell(row=current_row, column=2, value="Julia (Analyst / Backend / Security)").font = font_data
 ws.cell(row=current_row, column=3).fill = fill_bar_julia
 ws.cell(row=current_row, column=3).border = border_all
 
 current_row += 1
-ws.cell(row=current_row, column=2, value="Sopyan (Frontend / UI / UX)").font = font_data
+ws.cell(row=current_row, column=2, value="Sopyan (Frontend / UI / UX / QA)").font = font_data
 ws.cell(row=current_row, column=3).fill = fill_bar_sopyan
 ws.cell(row=current_row, column=3).border = border_all
 
@@ -203,7 +193,7 @@ ws.cell(row=current_row, column=3).fill = fill_bar_both
 ws.cell(row=current_row, column=3).border = border_all
 
 # Auto-adjust column widths for info columns
-for col in range(1, 9):
+for col in range(1, 7):
     max_len = 0
     col_letter = get_column_letter(col)
     for row in range(4, len(tasks) + 6):
@@ -213,14 +203,14 @@ for col in range(1, 9):
     ws.column_dimensions[col_letter].width = max(max_len + 4, 12)
 
 # Specific manual adjustment for Task Name
-ws.column_dimensions["B"].width = 35
+ws.column_dimensions["B"].width = 45
 
-# Set small width for day columns to look like a timeline grid
-for col in range(9, 30):
+# Set width for week columns to look like a timeline grid
+for col in range(7, 19):
     col_letter = get_column_letter(col)
-    ws.column_dimensions[col_letter].width = 4.5
+    ws.column_dimensions[col_letter].width = 6
 
 # Save the workbook
-file_path = "c:/laragon/www/kdkmp/project_management/Gantt_Chart_3_Minggu.xlsx"
+file_path = "c:/laragon/www/kdkmp/project_management/Gantt_Chart_12_Minggu.xlsx"
 wb.save(file_path)
 print(f"Excel file created at {file_path}")
